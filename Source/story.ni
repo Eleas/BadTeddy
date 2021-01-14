@@ -2,6 +2,164 @@
 this is a subtitle.
 
 
+[to set up the house:
+	now mom is in a random room;
+	now dad is in a random room;
+	now bobby is in a random room;
+	if a dice roll of difficulty 19 succeeds:]
+	
+Definition: an object (called the target) is well-placed if the target is in the starting position of the target.
+
+a thing has a room called the starting position.
+
+
+the dog bed is a fixed in place enterable supporter.
+
+when play begins:
+	default set up;
+	say "[line break]DEBUG: default set up.";
+	if DICE is greater than 19:
+		set up with crit good luck;
+		say "[line break]DEBUG: crit good luck setup.";
+	otherwise if DICE is greater than 16:
+		set up with good luck;
+		say "[line break]DEBUG:  good luck setup.";
+	otherwise if DICE is greater than 13:
+		set up with ok luck;
+		say "[line break]DEBUG: ok luck setup.";
+	otherwise if DICE is greater than 9:
+		set up with normal luck;
+		say "[line break]DEBUG: normal luck setup.";
+	otherwise if DICE is greater than 1:
+		set up with bad luck;
+		say "[line break]DEBUG: bad luck setup.";
+	otherwise:
+		set up with crit bad luck;
+		say "[line break]DEBUG: crit bad luck setup.";
+	let T be the list of things;
+	repeat with item running through T:
+		now the starting position of item is the location of item;
+		say "[item] starts in [the starting position of item].";
+	
+
+
+
+instead of taking a dog bed:
+	say "No, Chaser likes his bed in here.";
+	
+DADVISION is a list of things that varies.
+dad is a person. dad is in the Your Bedroom.
+
+the widget is a thing in the your bedroom. the starting position of the widget is the shared bathroom.
+	
+the speed of dad is 20.
+to have dad take a turn:
+	if dad randomly decides to act:
+		say "[line break]DEBUG: dadvision is empty";
+		let D be the list of things in the vicinity of Dad;
+		say "[line break]DEBUG: dad looking for things";
+		if D is not empty:
+			repeat with item running through D:
+				if item is not in the starting position of item and item is not scenery and item is not a family member and item is not teddy and item is not the player and item is not entry 1 of dadvision:
+					add item to DADVISION, if absent;
+					say "[line break]DEBUG:adding [item] to dadvision if absent";
+					say "Dad notices that the [item] is out of place.[line break][quotation mark]What's this doing here? I'll put it away.[quotation mark]";
+					say "[line break]DEBUG: the stating position of [item] is [the starting position of item]";
+					if item is not a supporter:
+						try dad taking item;
+		if DADVISION is not empty:
+			let E be entry 1 of DADVISION;
+			if E is not a supporter:
+				have Dad chase to the starting position of E;
+				say "[line break]DEBUG: dad is chasing to put away [E]";
+				if Dad is in the starting position of E:
+					if the location of dad is dark:
+						have dad turn on the lights;
+					remove E from DADVISION, if present;
+					if the starting position of E is the location of the cabinet:
+						try dad inserting E into the cabinet;
+						now the starting position of E is the location of the cabinet;
+					if E is the ball:
+						try dad inserting E into the dog bed;
+					otherwise if E is the lucky boxers:
+						if the lucky boxers are dirty:
+							try dad inserting the lucky boxers into the hamper;
+						otherwise if the lucky boxers are wet:
+							try dad opening the dryer;
+							try dad inserting the lucky boxers into the dryer;
+							try dad closing the dryer;
+						otherwise if the lucky boxers are in the dryer:
+							try dad opening the dryer;
+							try dad taking the lucky boxers;
+							try dad closing the dryer;
+						otherwise if the lucky boxers are clean and the lucky boxers are dry:
+							try dad inserting the lucky boxers into the drawers;
+					otherwise:
+						try Dad dropping E;
+			otherwise:
+				let the path be the best route from the location of E to the starting position of E;
+				try dad pushing E to the path;
+				if E is in the starting position of E:
+					remove E from DADVISION;
+		otherwise:
+			have dad wander;
+			
+to default set up:
+	now mom is in a random room that is not nothing;
+	now bobby is in a random room that is not nothing;
+	now dad is in a random room that is not nothing;
+	now chaser is in a random room that is not nothing;
+	now the step stool is in a random room that is not nothing;
+	now the starting position of the step stool is the location of the step stool;
+	now the high chair is in a random room that is not nothing;
+	now the starting position of the high chair is the location of the high chair;
+	now the ball is in the dog bed;
+	now the dog bed is in a random room that is not nothing;
+	now the starting position of the ball is the location of the dog bed;
+	if a random chance of 1 in 2 succeeds:
+		now the hamper is in the laundry room;
+	otherwise:
+		now the hamper is in the Your Bedroom;
+	if the lucky boxers are dirty:
+		now the starting position of the boxers is the location of the hamper;
+	otherwise if the lucky boxers are wet:
+		now the starting position of the lucky boxers is the laundry room;
+	otherwise if the lucky boxers are dry and the lucky boxers are clean:
+		now the boxers are in the drawers;
+		now the starting position of the lucky boxers is the Your Bedroom;
+
+to set up with crit good luck:
+	now the ball is carried by chaser;
+	now the lucky boxers are in the drawers;
+	now the lucky boxers are dry;
+	now the lucky boxers are clean;
+	
+to set up with good luck:
+	now the lucky boxers are in the dryer;
+	now the lucky boxers are wet;
+	now the lucky boxers are clean;
+
+to set up with ok luck:
+	now the lucky boxers are in the washer;
+	now the lucky boxers are dirty;
+	now the lucky boxers are dry;
+	
+to set up with normal luck:
+	now the lucky boxers are in the washer;
+	now the lucky boxers are clean;
+	now the lucky boxers are wet;
+	
+to set up with bad luck:
+	now the lucky boxers are in the hamper;
+	now the lucky boxers are dirty;
+	now the lucky boxers are dry;
+	
+to set up with crit bad luck:
+	now the lucky boxers are carried by chaser;
+	now the lucky boxers are dirty;
+	now the lucky boxers are dry;
+	
+
 LUCK is a number that varies. LUCK is 0.
 
 to decide which number is DICE:
@@ -24,6 +182,9 @@ The can't push what's fixed in place rule response (A) is "That's too heavy to m
 The can't pull what's fixed in place rule response (A) is "That's too heavy to move."
 The can't take what's fixed in place rule response (A) is "That's too heavy to move."
 
+rule for printing a parser error when the latest parser error is the can't see it at the moment error:
+	say "You can't see any such thing.";
+
 [lights]
 After deciding the scope of the player when the location is a dark room:
 	place the light switch in scope;
@@ -43,8 +204,7 @@ instead of the player switching on a light switch:
 	if the the player is on a supporter:
 		have the player turn on the lights;
 	otherwise if the player is not on a supporter:
-		say "You're too small to reach it.";
-		
+		say "You're too small to reach it.";		
 
 instead of the player switching off a light switch:
 	if the the player is on a supporter:
@@ -77,7 +237,7 @@ To decide which room is the vicinity of (X - thing):
 To have (P - thing) turn on the lights:
 	if the vicinity of P is dark:
 		now the vicinity of P is lit;
-		if the player is enclosed by the vicinity of P:
+		if the player is in the vicinity of P:
 			say  "[quotation mark]Click.[quotation mark] [line break]The lights go on.";
 	otherwise if the vicinity of P is lit:
 		if the player is P:
@@ -87,7 +247,7 @@ To have (P - thing) turn on the lights:
 To have (P - thing) turn off the lights:
 	if the vicinity of P is lit:
 		now the vicinity of P is dark;
-		if the player is enclosed by the vicinity of P:
+		if the player is in the vicinity of P:
 			say  "[quotation mark]Click.[quotation mark] [line break]The lights go off.";
 	otherwise if the vicinity of P is dark:
 		if the player is P:
@@ -148,6 +308,7 @@ To decide if (O - something) randomly decides to act:
 To have Teddy take a turn:
 	if the location of Teddy is salted or Teddy is carried by the player and the location of the player is salted:
 		have Teddy wander;
+		say "[line break]DEBUG: evading salt";
 	let T be the list of people in the location of Teddy;
 	let R be the list of supporters in the location;
 	repeat with stool running through R:
@@ -155,6 +316,7 @@ To have Teddy take a turn:
 			add the player to T;		
 	now the speed of Teddy is SPEED;
 	if Teddy randomly decides to act:
+		say " [line break]DEBUG: teddy acts";
 		if the number of entries in T is 1:
 			if entry 1 of T is the player:
 				if the location of Teddy is lit:
@@ -269,7 +431,7 @@ After the player wearing the lucky boxers:
 		say "DEBUG: luck= [LUCK][line break]";
 
 Chaser is a person.
-chaser is in the Shared Bathroom;
+the description of chaser is "That's Chaser, the family dog.[if the lucky boxers are carried by chaser]He currently chewing on your lucky boxers.[otherwise if the ball is carried by chaser]He is carrying a rubber ball in his mouth.".
 
 to have chaser protecc:
 	if the the player is in the vicinity of Teddy:
@@ -308,12 +470,19 @@ Check throwing to:
 			if chaser is in the location:
 				say "[line break]Chaser bounds after the ball, tail wagging.";
 				now Chaser is in the location of the ball;
+				if chaser carries the lucky boxers:
+					try chaser dropping the lucky boxers;		
 	otherwise:
 		now the noun is in the location;
 		if the noun is throwable and the noun is not the salt shaker and the noun is not the rubber ball:
 			say "[the noun] bounces harmlessly off the wall.";
 		otherwise if the noun is the rubber ball:
-			say "Chaser catches the rubber ball in mid air. He drops it at your feet and looks at you expectantly.";
+			if chaser is in the location:
+				if the lucky boxers are carried by chaser:
+					try chaser dropping the lucky boxers;
+					say "Chaser catches the rubber ball in mid air. He drops it at your feet and looks at you expectantly.";
+			otherwise:
+				say "[the noun] bounces harmlessly off the wall.";
 		otherwise if the noun is the salt shaker:
 			say "The salt shaker slams into the wall and breaks, spilling all of it's contents.";
 			now the location is salted;
@@ -333,14 +502,31 @@ to have chaser ball beg:
 	say "He looks up at you expectantly, tail wagging.";
 	continue the action;
 	
-doggy time is a scene. doggy time begins when the player is in the location of chaser.
+doggy time is a recurring scene. doggy time begins when the player is in the location of chaser and the ball is carried by chaser.
 
 when doggy time begins:
-	have chaser ball beg;
+	if the ball is carried by chaser:
+		have chaser ball beg;
+	otherwise if chaser carries the lucky boxers:
+		have chaser boxer guard;
+	
+to have chaser boxer guard:
+	say "Chaser is happily chewing on your lucky boxers.";
+
+instead of taking the lucky boxers when the lucky boxers are carried by chaser:
+	say "GRRR![line break]Chaser refuses to give up your lucky boxers.";
 	
 doggy time ends when the time since the doggy time began is 2 minutes.
 
 to have chaser take a turn:
+	if the ball is in the location of chaser:
+		if the lucky boxers are carried by chaser:
+			try chaser dropping the lucky boxers;
+		try chaser taking the ball;
+	otherwise if the lucky boxers are in the location of chaser:
+		if the ball is carried by chaser:
+			try chaser dropping the ball;
+		try chaser taking the lucky boxers;
 	if chaser randomly decides to act:
 		if a random chance of 1 in 2 succeeds:
 			move chaser to a random room adjacent to chaser;
@@ -348,40 +534,38 @@ to have chaser take a turn:
 		otherwise:
 			if the player is in the location of chaser:
 				let RAND be a random number between 1 and 4;
-				if chaser randomly decides to act:
-					if a dice roll of difficulty 10 succeeds:
-						if the player is not in the vicinity of Teddy:
-							if RAND is 1:
-								say "Chaser uses his hind leg to scratch his ear.";
-							otherwise if RAND is 2:
-								say "Chaser rolls on his back, exposing his belly.";
-							otherwise if RAND is 3:
-								say "Chaser trots up to you, and gives you a friendly lick on the cheek.";
-							otherwise if RAND is 4:
-								say "Chaser chases his tail for a moment, then lazily slumps in the corner.";
-						otherwise if the player is in the vicinity of Teddy:
-							if chaser is in the location:
-								if RAND is 1:
-									have chaser sniff;
-								otherwise if RAND is 2:
-									have chaser alert;
-								otherwise if RAND is 3:
-									if a dice roll of difficulty 13 succeeds:
-										have chaser protecc;
-									otherwise:
-										have chaser alert;
-						otherwise if chaser is in the vicinity of Teddy:
+				if the player is not in the vicinity of Teddy:
+					if RAND is 1:
+						say "Chaser uses his hind leg to scratch his ear.";
+					otherwise if RAND is 2:
+						say "Chaser rolls on his back, exposing his belly.";
+					otherwise if RAND is 3:
+						if chaser is carrying nothing:
+							say "Chaser trots up to you, and gives you a friendly lick on the cheek.";
+						otherwise:
+							say "Chaser is chewing happily on your lucky boxers.";
+					otherwise if RAND is 4:
+						say "Chaser chases his tail for a moment, then lazily slumps in the corner.";
+				otherwise if the player is in the vicinity of Teddy:
+					if chaser is in the location:
+						if RAND is 1:
+							have chaser sniff;
+						otherwise if RAND is 2:
+							have chaser alert;
+						otherwise if RAND is 3:
 							if a dice roll of difficulty 13 succeeds:
-								say "You hear the distant sound of Chaser, barking furiously.";
-
+								have chaser protecc;
+							otherwise:
+								have chaser alert;
+				otherwise if chaser is in the vicinity of Teddy:
+					if a dice roll of difficulty 13 succeeds:
+						say "You hear the distant sound of Chaser barking furiously.";
 		
 to have chaser alert:
 	if a random chance of 1 in 2 succeeds:
 		say "Chaser is circling the room. [line break][quotation mark]BARK BARK![quotation mark]";
 	otherwise: 
-		say "Chaser sniffs around the room furiously.";
-
-	
+		say "Chaser sniffs around the room furiously.";	
 		
 After the player taking off the lucky boxers:
 	decrease LUCK by boxer power;
@@ -412,6 +596,7 @@ When dry cycle ends:
 		if the lucky boxers are wet:
 			now the lucky boxers are dry;
 			now the printed name of the boxers is "clean boxers";
+			now the starting position of the boxers is the Your Bedroom;
 	
 
 [After switching on a device (called the machine):
@@ -441,7 +626,7 @@ After switching on the button:
 	the dry cycle ends in 10 minutes from now;
 	
 at the time when the dry cycle ends:
-	now the button is switched off;]
+	now the button is switched off;
 
 Every turn while the button is switched on:
 	if the player is in the vicinity of the dryer:
@@ -453,7 +638,7 @@ Every turn while the dial is switched on:
 	if the player is in the vicinity of the washer:
 		say "You hear the sloshing of the washer.";
 	otherwise:
-		say "You hear the distant sloshing of the washer.";						
+		say "You hear the distant sloshing of the washer.";			]			
 
 the speed of chaser is 30.
 				
@@ -462,16 +647,19 @@ Every turn:
 	now the right hand status line is "[time of day]"; 
 	[have mom take a turn;]
 	[have the imposter take a turn;]
-	have chaser take a turn;
+	if dad is not nowhere:
+		have dad take a turn;
+	if chaser is not nowhere:
+		have chaser take a turn;
 	if mom is not nowhere:
 		have mom take a turn;
 	if Teddy is not nowhere:
 		have Teddy take a turn;
-	say "teddy is in [the location of teddy][line break]";
+	say "[line break] DEBUG: teddy is in [the location of teddy]";
 
 
 [turns]
-Bobby is a person. Bobby is in the Entry Hall.
+
 
 to have mom light-police:
 	say "mom is light-policing [line break]";
@@ -618,16 +806,20 @@ A room can be salted or unsalted. A room is usually unsalted.
 
 [wander and chase]
 To have (P - thing) wander:
-	move P to a random room adjacent to P;
-	say "DEBUG: [P] wanders to [the location of P]";
-[	If P is Teddy:
+	let the path be the best route from the location of P to a random room adjacent to P;
+	if P is Teddy:
 		let the saltless path be the best route from the location of P to a random unsalted room adjacent to P;
 		if the saltless path is not nothing:
 			silently try P going the saltless path;
 		otherwise:
-			move P to a random unsalted room;
+			do nothing;
+			say "DEBUG: Teddy cant get to a saltless room";
 	otherwise if P is not Teddy:
-		move P to a random room adjacent to P;]
+		move P to a random room adjacent to P;
+	otherwise:
+		try P going the path;
+	say "DEBUG: [P] wanders to [the location of P]";
+
 			
 To have (P - thing) evade:
 	let R be the list of rooms adjacent to P;
@@ -639,27 +831,29 @@ To have (P - thing) evade:
 	
 [Chase]
 To have (P - thing) chase to (R - room):
-	if P is not in the location:
-		let the path be the best route from the location of P to R, using doors;
-		if P is Teddy:
-			if the path is salted:
-				have P wander;
-		if the path is not nothing,silently try P going the path;
+	let the path be the best route from the location of P to R, using doors;
+	if P is Teddy:
+		if the path is salted:
+			have P wander;
+		otherwise:
+			if the path is not nothing, silently try P going the path;
 	otherwise:
-		do nothing;
+		if the path is not nothing, try P going the path;
+
 			
 instead of Teddy going to a salted room:
 	let R be a random unsalted room adjacent to Teddy;
 	if R is not nothing:
 		now teddy is in R;
 	otherwise:
-		now teddy is in a random unsalted room;
+		do nothing;
 
 to have Teddy kill (P - person):
 	if P is the player:
 		end the story saying "Teddy got you.";
 	otherwise:
 		now P is nowhere; 
+		say "[line break]DEBUG: Teddy killed [P]";
 		if a dice roll of difficulty 5 succeeds:
 			now the left hand status line is "GOODBYE";
 			now the right hand status line is "[the printed name of P in upper case]";
@@ -693,18 +887,13 @@ After being noisy:
 		say "DEBUG: Teddy heard you";
 	continue the action;
 
-After going to somewhere with a supporter (called the pushed):
-	increment the turn count;
-	increase the time of day by one minute;
-	say "Pushing [the pushed] is difficult and noisy. Time passes.";
-	continue the action;
-
 instead of dropping something (called the dropped) while the player is on a supporter:
 	now the dropped is in the location;
 	say "Dropped.[line break]";
 
 instead of putting Teddy on a supporter:
 	now Teddy is in the location;
+	say "Teddy slips off and falls to the floor.";
 
 
 The Your Bedroom is a room.
@@ -720,12 +909,11 @@ The Your Bedroom is a room.
 	The hamper is a container in the your bedroom. [random bedroom vs laundry room]
 	The lucky boxers is a wearable thing. The indefinite article is "your". the player carries the lucky boxers.
 
+the description of the lucky boxers is "They're[if the lucky boxers are wet]wet.[otherwise if the lucky boxers are dirty]dirty.[otherwise if the lucky boxers are clean]clean.".
+
 instead of entering your bed:
 	say "There's no point.";
 
-
-
-	
 
 After going a direction (called way-pushed) with something (called the thing-pushed):
 	say "You push [the thing-pushed] [way-pushed] to [the location].";
@@ -733,18 +921,18 @@ After going a direction (called way-pushed) with something (called the thing-pus
 	
 
 
-
 [salt]
 
 
 
 The Shared Bathroom is south of the Your Bedroom.
-"I share this bathroom with my brother, Bobby."
-The mirror is a fixed in place thing in the Shared Bathroom.
-the description of the mirror is "I can see myself in it[if Teddy is in the location and Teddy is not carried by the player] with a teddy bear behind me.[otherwise].".
+"You share this bathroom with your brother, Bobby."
+The small mirror is a fixed in place thing in the Shared Bathroom.
+the description of the small mirror is "I can see myself in it[if Teddy is in the location and Teddy is not carried by the player] with a teddy bear behind me.[otherwise].".
+the cabinet is an opaque closed openable fixed in place container in the Shared Bathroom;
 
-Instead of searching the mirror:
-	say "[the description of the mirror]";
+Instead of searching the small mirror:
+	say "[the description of the small mirror]";
 
 The Bobby's Bedroom is east of the Shared Bathroom and west of the Entry Hall.
 	The toybox is an opaque closed fixed in place openable container in Bobby's Bedroom.
@@ -754,8 +942,15 @@ The hall closet is a fixed in place openable closed container in the Small Hall.
 The vacuum cleaner is a device in the hall closet.
 
 The Parent's Bedroom is north of the Small Hall.
-
+	the queen-sized bed is a fixed in place thing in the Parent's Bedroom.
+	the nightstand is a fixed in place opaque closed openable container in the Parent's Bedroom.
 The Parent's Bathroom is west of the Parent's Bedroom.
+the large mirror is a fixed in place thing in the Parent's Bathroom.
+
+the description of the large mirror is "I can see myself in it[if Teddy is in the location and Teddy is not carried by the player] with a teddy bear behind me.[otherwise].".
+
+Instead of searching the large mirror:
+	say "[the description of the large mirror]";
 
 the Living Room is east of the Small Hall.
 
@@ -779,7 +974,7 @@ instead of pushing a supporter:
 
 The Dining Room is east of the Kitchen.
 the table is a fixed in place supporter in the dining room.
-the high chair is a supporter in the dining room. The high chair is pushable between rooms.
+the high chair is a supporter. The high chair is pushable between rooms.
 the description of the high chair is
 	"Good for reaching high places."
 
@@ -856,11 +1051,16 @@ Instead of opening the entryway:
 The Play Room is south of the Laundry Room and east of the Entry Hall.
 
 The Garage is east of the Play Room.
+The car is a fixed in place thing in the Garage.
+The garage door is a fixed in place thing in the Garage.
+The toolbox is an opaque closed openable container in the garage.
+
+
+
 
 Mom is a person.
 
 
-mom is in the your bedroom.
 
 the floor is a backdrop. the floor is everywhere.
 understand "carpet" or "rug" or "ground" or "room" as the floor.
@@ -923,17 +1123,10 @@ Report pouring:
 a family member is a kind of person.
 mom is a family member.
 bobby is a family member.
+dad is a family member.
 chaser is a family member;
 	
 
-[rule for printing a parser error when the latest parser error is the can't see any such thing error:
-	if the imposter is in the vicinity of the player:
-		say "Fearing discovery, the [the printed name of the imposter] panics!";
-		have the imposter wander;
-		have the imposter transform;
-		have the imposter evade;
-	otherwise:
-		continue the action;]
 
 
 		
@@ -1009,3 +1202,74 @@ check petting:
 - what is the salt for?
 - what is teddy?
 ]
+
+the speed of bobby is 30.
+
+bobby is in the Your Bedroom.
+
+bobby clap is a recurring scene.
+bobby clap begins when the player is in the location of bobby and the location of bobby is lit and bobby randomly decides to act.
+
+clap-count is a number that varies. clap-count is initially 0.
+
+bobby clap ends when clap-count is 7 or the location of bobby is dark;
+
+Every turn during bobby clap:
+	if the location is lit:
+		say rhyme;
+		
+playing with is an action applying to one thing.
+understand "play with [something]" as playing with.
+
+When bobby clap ends:
+	now the clap-count is 0;
+	if the location is dark:
+		say "Bobby: [quotation mark]Hey! Who turned off the lights?[quotation mark]"
+		
+instead of doing something other than playing with bobby during bobby clap:
+		say fail;
+
+after playing with bobby while bobby clap is happening:
+	if clap-count is 0:
+		increment the clap-count;
+	otherwise if clap-count is 1:
+		say "You: [quotation mark]all dressed in black, black, black...[quotation mark]";
+		increment the clap-count;
+	otherwise if clap-count is 2:
+		say "You: [quotation mark]all down her back, back, back...[quotation mark]";
+		increment the clap-count;
+	otherwise if clap-count is 3:
+		say "You: [quotation mark]for fifteen cents, cents, cents...[quotation mark]";
+		increment the clap-count;
+	otherwise if clap-count is 4:
+		say "You: [quotation mark]jump over the fence, fence, fence... [quotation mark]";
+		increment the clap-count;
+	otherwise if clap-count is 5:
+		say "You: [quotation mark]he reached the sky, sky, sky...[quotation mark]";	
+		increment the clap-count;
+	otherwise if clap-count is 6:
+		say "You continue the rhyme: [quotation mark]'till the fourth of July, -ly, -ly[quotation mark]";
+		increment the clap-count;
+
+			
+to say rhyme:
+	if clap-count is 0:
+		say "Bobby looks at you expectantly.[line break]Bobby:[quotation mark]Play the hand clap game with me![quotation mark]";
+	otherwise if clap-count is 1:
+		say "Bobby: [quotation mark]Miss Mary Mack, Mack, Mack...[quotation mark]";
+	otherwise if clap-count is 2:
+		say "Bobby: [quotation mark]with silver buttons, buttons, buttons...[quotation mark]";
+	otherwise if clap-count is 3:
+		say "Bobby: [quotation mark]She asked her mother, mother, mother...[quotation mark]";
+	otherwise if clap-count is 4:
+		say "Bobby: [quotation mark]to see the elephant, elephant, elephant...[quotation mark]";
+	otherwise if clap-count is 5:
+		say "[quotation mark]he jumped so high, high, high...[quotation mark]";
+	otherwise if clap-count is 6:
+		say "Bobby: [quotation mark]and he didn't come back, back, back...[quotation mark]";
+		
+to say fail:
+	say "Bobby gives you an angry look. [line break] Bobby:[quotation mark]No! You have to play with me![quotation mark]";
+			
+			
+		
