@@ -16,7 +16,7 @@ Chapter 1 - Luck and Abstractions
 
 a thing has a room called the starting position.
 
-[Some things in the house are always set up the same way, regardless of how lucky you are.]
+[Some things in the house are always set up the same way, regardless of how lucky you are.Note that the supporters need special code to identify their starting position. I can't remember why, but I know that it won't work unless I do this.]
 to default set up:
 	now mom is in a random room that is not nothing;
 	now Teddy is in a random room that is not nothing;
