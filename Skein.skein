@@ -10,26 +10,25 @@
 
 DEBUG: default set up.
 
-DEBUG: bad luck setup.
+DEBUG:  good luck setup.
 yourself starts in the Your Bedroom.
 salt shaker starts in the Your Bedroom.
 lucky boxers starts in the Laundry Room.
-dog bed starts in the Small Hall.
-dad starts in the Kitchen.
-widget starts in the Your Bedroom.
-Teddy starts in the Your Bedroom.
-step stool starts in the Kitchen.
+dog bed starts in the Living Room.
+Dad starts in the Parent&apos;s Bedroom.
+step stool starts in the Bobby&apos;s Bedroom.
 your bed starts in the Your Bedroom.
 dresser starts in the Your Bedroom.
 hamper starts in the Laundry Room.
-bobby starts in the Laundry Room.
-small mirror starts in the shared bathroom.
-cabinet starts in the shared bathroom.
+Teddy starts in the Garage.
+Mom starts in the Entry Hall.
+chaser starts in the Entry Hall.
+rubber ball starts in the Living Room.
+Bobby starts in the Bobby&apos;s Bedroom.
 light switch starts in the Your Bedroom.
-Mom starts in the Your Bedroom.
-Chaser starts in the shared bathroom.
-rubber ball starts in the Small Hall.
 drawers starts in the Your Bedroom.
+small mirror starts in the Shared Bathroom.
+cabinet starts in the Shared Bathroom.
 toybox starts in the Bobby&apos;s Bedroom.
 front door starts in the Entry Hall.
 hall closet starts in the Small Hall.
@@ -39,24 +38,24 @@ nightstand starts in the Parent&apos;s Bedroom.
 large mirror starts in the Parent&apos;s Bathroom.
 pantry starts in the Kitchen.
 table starts in the Dining Room.
-high chair starts in the shared bathroom.
-washer starts in the Laundry Room.
-dryer starts in the Laundry Room.
+high chair starts in the Bobby&apos;s Bedroom.
 washer starts in the Laundry Room.
 dryer starts in the Laundry Room.
 car starts in the Garage.
 garage door starts in the Garage.
 toolbox starts in the Garage.
 floor starts in the Your Bedroom.
+washer starts in the Laundry Room.
+dryer starts in the Laundry Room.
 
 Bad Teddy
 An Interactive Fiction by &quot;Y&apos;Gael of Atrii&quot; this is a subtitle
-Release 1 / Serial number 210114 / Inform 7 build 6M62 (I6/v6.33 lib 6/12N) SD
+Release 1 / Serial number 210115 / Inform 7 build 6M62 (I6/v6.33 lib 6/12N) SD
 
 Your Bedroom
-This is your bedroom. There is a shelf with a teddy bear on it. 
+This is your bedroom. There is a shelf with nothing on it.
 
-You can see Mom, a widget, your bed and a dresser here.
+You can see your bed and a dresser here.
 
 &gt;</result>
     <commentary xml:space="preserve"></commentary>

@@ -57,13 +57,13 @@ to set up with good luck:
 
 to set up with ok luck:
 	now the lucky boxers are in the washer;
-	now the lucky boxers are dirty;
-	now the lucky boxers are dry;
+	now the lucky boxers are clean;
+	now the lucky boxers are wet;
 	
 to set up with normal luck:
 	now the lucky boxers are in the washer;
-	now the lucky boxers are clean;
-	now the lucky boxers are wet;
+	now the lucky boxers are dirty;
+	now the lucky boxers are dry;
 	
 to set up with bad luck:
 	now the lucky boxers are in the hamper;
