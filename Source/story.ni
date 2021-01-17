@@ -1,105 +1,113 @@
 "Bad Teddy" by "Y'Gael of Atrii"
-this is a subtitle.
 
 [NOTE:
 I am not yet done commenting this code. It starts out organized, then  degenerates near the end into a working but scrambled mess of stuff. I will continue to clean it up, but I figured posting what I have would be better than nothing, and I can tell the cleanup will be a process. Pardon the dust, and enjoy the ride.]
 
 
 Chapter 1 - Luck and Abstractions
-[We want an environment that is random enough to make things difficult for the player, but also plausible in terms of a house layout. In this chapter I:
 
+[We want an environment that is random enough to make things difficult for the player, but also plausible in terms of a house layout. In this chapter I:
 1. Create a system of luck based on rolling a D20 with an advantage given to the player when they engage in activities that increase their LUCK
 2. Create several plausible layouts for items in the house that present greater or lesser challenges based on a roll of the die.
 3. Create an indexing system for this layout so that DAD can return any items that the player moves out of position to their original location.]
 
 [Dad is always looking for things that need to be put away.  In order to make this possible, we must set the STARTING POSITION of every moveable item in the house.]
 
-a thing has a room called the starting position.
+[Some things in the house are always set up the same way, regardless of how lucky you are.Note that the supporters need special code to identify their starting position. I can't 
+remember why, but I know that it won't work unless I do this.]
+A thing has a room called the starting position.
+A thing can be randomly scattered on startup. 
 
-[Some things in the house are always set up the same way, regardless of how lucky you are.Note that the supporters need special code to identify their starting position. I can't remember why, but I know that it won't work unless I do this.]
-to default set up:
-	now mom is in a random room that is not nothing;
-	now Teddy is in a random room that is not nothing;
-	now bobby is in a random room that is not nothing;
-	now dad is in a random room that is not nothing;
-	now chaser is in a random room that is not nothing;
-	now the step stool is in a random room that is not nothing;
-	now the starting position of the step stool is the location of the step stool;
-	now the high chair is in a random room that is not nothing;
-	now the starting position of the high chair is the location of the high chair;
-	now the ball is in the dog bed;
-	now the dog bed is in a random room that is not nothing;
-	now the starting position of the ball is the location of the dog bed;
-	if a random chance of 1 in 2 succeeds:
-		now the hamper is in the laundry room;
-	otherwise:
-		now the hamper is in the Your Bedroom;
-	if the lucky boxers are dirty:
-		now the starting position of the boxers is the location of the hamper;
-	otherwise if the lucky boxers are wet:
-		now the starting position of the lucky boxers is the laundry room;
-	otherwise if the lucky boxers are dry and the lucky boxers are clean:
-		now the boxers are in the drawers;
-		now the starting position of the lucky boxers is the Your Bedroom;
-		
+The step stool, the high chair, and the dog bed are randomly scattered on startup.
 
-[Other things in the house are set up in advantageous or disadvantageous ways based on a D20 roll with no advantage]
-to set up with crit good luck:
-	now the ball is carried by chaser;
-	now the lucky boxers are in the drawers;
-	now the lucky boxers are dry;
-	now the lucky boxers are clean;
-	
-to set up with good luck:
-	now the lucky boxers are in the dryer;
-	now the lucky boxers are wet;
-	now the lucky boxers are clean;
+A person is usually randomly scattered on startup. 
+The player is not randomly scattered on startup.
 
-to set up with ok luck:
-	now the lucky boxers are in the washer;
-	now the lucky boxers are clean;
-	now the lucky boxers are wet;
-	
-to set up with normal luck:
-	now the lucky boxers are in the washer;
-	now the lucky boxers are dirty;
-	now the lucky boxers are dry;
-	
-to set up with bad luck:
-	now the lucky boxers are in the hamper;
-	now the lucky boxers are dirty;
-	now the lucky boxers are dry;
-	
-to set up with crit bad luck:
-	now the lucky boxers are carried by chaser;
-	now the lucky boxers are dirty;
-	now the lucky boxers are dry;
-	
-when play begins:
-	default set up;
-	say "[line break]DEBUG: default set up.";
-	if DICE is greater than 19:
-		set up with crit good luck;
-		say "[line break]DEBUG: crit good luck setup.";
-	otherwise if DICE is greater than 16:
-		set up with good luck;
-		say "[line break]DEBUG:  good luck setup.";
-	otherwise if DICE is greater than 13:
-		set up with ok luck;
-		say "[line break]DEBUG: ok luck setup.";
-	otherwise if DICE is greater than 9:
-		set up with normal luck;
-		say "[line break]DEBUG: normal luck setup.";
-	otherwise if DICE is greater than 1:
-		set up with bad luck;
-		say "[line break]DEBUG: bad luck setup.";
-	otherwise:
-		set up with crit bad luck;
-		say "[line break]DEBUG: crit bad luck setup.";
-	let T be the list of things;
-	repeat with item running through T:
+Definition: a thing is inanimate if it is not a person.
+
+Section - Stage management
+
+[We could do this as a single "thing" pass, but we may want to differentiate 
+how actors are handled, since the piece is so character centric.]
+To randomly place (critter - a person):
+	now the critter is off-stage; [safeguard if we ever change the code to "reseat" a person during play]
+	while the critter is off-stage:
+		let potential spot be a random room;
+		if the number of people in the potential spot is less than 2:
+			now the critter is in the potential spot.
+
+To randomly place (item - a thing):
+	now the item is off-stage; [safeguard if we ever change the code to "reseat" a thing during play]
+	while the item is off-stage:
+		let potential spot be a random room;
+		let N be the number of (inanimate things which are randomly scattered on startup) in the potential spot;
+		if N is less than 2:
+			now the item is in the potential spot.
+
+To place the cast at random:
+	repeat with actor running through { Mom, Teddy, Bobby, Dad, Chaser }:
+		randomly place the actor;
+
+To place some props at random:
+	repeat with item running through { step stool, high chair, dog bed }:
+		randomly place the item.
+
+To place location-dependent props:
+	if a random chance of 1 in 2 succeeds, now the hamper is in the laundry room;
+	otherwise now the hamper is in your bedroom.		
+
+
+Section - Startup
+
+To perform default setup:
+	place the cast at random;
+	place some props at random;
+	place location-dependent props.
+
+Fortune is a kind of value. The fortunes are abysmal, bad, mediocre, fair, good, excellent.
+
+Table of the Lucky Basterd
+die roll (a number)	result (a fortune)	underpants placement (object)
+20	excellent	drawers	
+17	good	dryer	
+14	fair	washer	
+10	mediocre	washer	
+2	bad	hamper	
+1	abysmal	chaser	
+
+The dryness rules is a fortune based rulebook. The dryness rules have default success.
+A dryness rule for fair: rule fails.
+
+The cleanliness rulebook is a fortune based rulebook. The cleanliness rules have default success.
+A cleanliness rule for a fortune (called f) when f is less than fair: rule fails.
+
+To decide which fortune is the table-lookup for (n - a number):
+	let index be 1;
+	repeat through the Table of the Lucky Basterd:
+		if n is not less than the die roll entry:
+			break;
+		increment index;
+	choose row index from the Table of the Lucky Basterd;
+	follow the cleanliness rules for the result entry;
+	if rule succeeded, now the lucky boxers are clean;
+	otherwise now the lucky boxers are dirty;
+	follow the dryness rules for the result entry;
+	if rule succeeded, now the lucky boxers are dry;
+	otherwise now the lucky boxers are wet;
+	decide on the result entry.
+
+To set all starting positions:
+	repeat with item running through things:
 		now the starting position of item is the location of item;
-		say "[item] starts in [the starting position of item].";
+		say "[item] starts in [the starting position of item]."
+		
+When play begins:
+	perform default setup;
+	say "[line break]DEBUG: default set up.";
+	let the startup-roll be DICE;
+	let flax be the table-lookup for the startup-roll;
+	say "[line break]DEBUG: [flax] luck setup (die roll of [startup-roll]).";
+	set all starting positions.
 		
 [Besides "normal" luck which is executed above, the player can also be extra lucky. This happens if the player wears the lucky boxers while they are dry and clean, for example, but we can use it for anything we like.]
 
@@ -112,48 +120,26 @@ to decide which number is DICE:
 	increase RAND by LUCK;
 	if RAND is at least 20:
 		decide on 20;
-	otherwise:
-		decide on RAND;
-
+	decide on RAND;
+		
 [We can use the D20 roll directly to vary the consequences for different rolls, or we can just decide if a "check" roll of a given difficulty succeeds, as shown below]
 To decide if a dice roll of difficulty (N - number) succeeds:
-	if DICE is greater than N:
-		decide yes;
-	otherwise:
-		decide no;
-
+	decide on whether or not DICE is greater than N.
 
 [The Vicinity and co-location-------------------------]
 
 [This game needs to make a lot of decisions about whether things are in the location of the player or not. I discovered that if the player is on a supporter, the player is no longer in the location of the player (or the location of the player is no longer a room, I'm not sure), which I previously thought was impossible. I also learned that anything else that is in or on something is also not in the location, even if it is in the same room. We fix this by referring to the following two other concepts in our code instead of "the location" whenever possible]		
 
-
 To decide which room is the vicinity of (X - thing):
-	if X is on a supporter (called the target):
-		decide on the location of the target;
-	otherwise if X is in a container (called the trap):
-		decide on the location of the trap;
-	otherwise if X is carried by the player:
-		decide on the location of the player;
-	otherwise:
-		decide on the location of X;
+	if X is enclosed by something (called the target), decide on the location of the target;
+	decide on the location of X.
 		
 To decide if (X - a thing) is co-located with (Y - a thing):
-	if the location of X is the location of Y:
-		yes;
-	otherwise if X is on a supporter (called the target) and the target is in the location of Y:
-		yes;
-	otherwise if Y is on a supporter (called the target) and the target is in the location of X:
-		yes;
-	otherwise if X is carried by Y:
-		yes;
-	otherwise if Y is carried by X:
-		yes;
-	otherwise:
-		no;
+	decide on whether or not the vicinity of X is the vicinity of Y.
 
 		
 Chapter 2 - Persons, places, things
+
 [In this chapter, we define everything on the most basic level, simply making them exist. Later, we will give them more interesting features.]
 
 The dog bed is a fixed in place enterable supporter.
@@ -164,6 +150,7 @@ Instead of taking a dog bed:
 Dad is a person. Dad is in the Your Bedroom.
 
 Chapter 3 - Behaviors
+
 [The house is designed to have only a few dead ends, with many possible paths for our randomized characters to wander around. The goal is to create a map where it is possible to give Teddy the slip while also restricting the travel options of both Teddy and the player when they go into certain rooms]
 
 
@@ -338,7 +325,7 @@ to complain:
 	say "Bobby gives you an angry look. [line break] Bobby:[quotation mark]No! You have to play with me![quotation mark]";
 [Teddy----------------------------------]
 
-Teddy is a thing. 
+Teddy is a person. 
 
 [I honestly can't remember why I made this and I may delete this code]
 Teddy has a number called boldness. boldness is usually 0.
@@ -433,7 +420,6 @@ To have Teddy take a turn:
 [MOM--------------------------------------------]
 
 [Mom is a complex character. This requires some explanation of the code we see later. 
-
 The previous code has made reference to rooms being salted. The character can use the salt shaker to salt the floors in a room. Because Teddy is haunted, this prevents Teddy from being able to enter that room (hints will be placed in the game for this later). The salt shaker has enough salt to protect three rooms. When a room is salted however, if mom finds it, she will vacuum it. She will do this by fetching the vacuum from the closet, going to whichever salted room she finds, and vacuuming it up, then putting the vacuum back. If she catches the player pouring salt on a rug, or if she cannot find the vacuum in the closet and then, upon searching for it, discovers it in the player's posession, she will put the player in time-out. The player is taken to their bedroom and must stay there for 10 turns until they are freed again. As of writing this comment, Mom's code works great, but because it is so complex, it is delicate code. Be careful editing this.]
 
 Mom is a person.
@@ -612,18 +598,18 @@ Check throwing to:
 		otherwise:
 			say "[the noun] isn't suitable for throwing.";
 
-a thing can be throwable. A thing is usually not throwable.
-the rubber ball is throwable. the salt shaker is throwable.
+A thing can be throwable. A thing is usually not throwable.
+the salt shaker is throwable.
 		
-the rubber ball is a thing. The rubber ball is carried by chaser;
+The rubber ball is a throwable thing. The rubber ball is carried by chaser;
 
-to have chaser ball beg:
+To have chaser ball beg:
 	say "Chaser bounds up to you with a rubber ball in his mouth.";
 	try chaser dropping the ball;
 	say "He looks up at you expectantly, tail wagging.";
 	continue the action;
 	
-doggy time is a recurring scene. doggy time begins when the player is in the location of chaser and the ball is carried by chaser.
+Doggy time is a recurring scene. Doggy time begins when the player is in the location of chaser and the ball is carried by chaser.
 
 when doggy time begins:
 	if the ball is carried by chaser:
@@ -905,7 +891,7 @@ The Your Bedroom is a room.
 	The hamper is a container in the your bedroom. [random bedroom vs laundry room]
 	The lucky boxers is a wearable thing. The indefinite article is "your". the player carries the lucky boxers.
 
-the description of the lucky boxers is "They're[if the lucky boxers are wet]wet.[otherwise if the lucky boxers are dirty]dirty.[otherwise if the lucky boxers are clean]clean.".
+the description of the lucky boxers is "They're [if wet]wet[otherwise if dirty]dirty[otherwise]clean[end if]."
 
 instead of entering your bed:
 	say "There's no point.";
