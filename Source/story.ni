@@ -75,25 +75,23 @@ die roll (a number)	result (a fortune)	underpants placement (object)
 2	bad	hamper	
 1	abysmal	chaser	
 
-The dryness rules is a fortune based rulebook. The dryness rules have default success.
-A dryness rule for fair: rule fails.
+The dryness rules is a fortune based rulebook. The dryness rules have default success. 
+A dryness rule: now the lucky boxers are dry.
+A dryness rule for fair: now the lucky boxers are wet.
 
 The cleanliness rulebook is a fortune based rulebook. The cleanliness rules have default success.
-A cleanliness rule for a fortune (called f) when f is less than fair: rule fails.
+A cleanliness rule: now the lucky boxers are clean.
+A cleanliness rule for a fortune (called f) when f is less than fair: now the lucky boxers are dirty.
 
 To decide which fortune is the table-lookup for (n - a number):
 	let index be 1;
 	repeat through the Table of the Lucky Basterd:
 		if n is not less than the die roll entry:
-			break;
+			break; [we stop iteration, having found the proper table result]
 		increment index;
 	choose row index from the Table of the Lucky Basterd;
 	follow the cleanliness rules for the result entry;
-	if rule succeeded, now the lucky boxers are clean;
-	otherwise now the lucky boxers are dirty;
 	follow the dryness rules for the result entry;
-	if rule succeeded, now the lucky boxers are dry;
-	otherwise now the lucky boxers are wet;
 	decide on the result entry.
 
 To set all starting positions:
@@ -105,8 +103,8 @@ When play begins:
 	perform default setup;
 	say "[line break]DEBUG: default set up.";
 	let the startup-roll be DICE;
-	let flax be the table-lookup for the startup-roll;
-	say "[line break]DEBUG: [flax] luck setup (die roll of [startup-roll]).";
+	let f be the table-lookup for the startup-roll;
+	say "[line break]DEBUG: [f] luck setup (die roll of [startup-roll]).";
 	set all starting positions.
 		
 [Besides "normal" luck which is executed above, the player can also be extra lucky. This happens if the player wears the lucky boxers while they are dry and clean, for example, but we can use it for anything we like.]
@@ -147,7 +145,7 @@ The dog bed is a fixed in place enterable supporter.
 Instead of taking a dog bed:
 	say "No, Chaser likes his bed in here.";
 	
-Dad is a person. Dad is in the Your Bedroom.
+Dad is a person. Dad is in your bedroom.
 
 Chapter 3 - Behaviors
 
@@ -258,71 +256,49 @@ to have dad take a turn:
 [Bobby--------------------------]
 [Bobby is your older brother. He wants to play with you, wasting your time while Teddy does the dirty business. His code is still pretty buggy. He wants to play the "miss mary mack" hand clap game with you.]
 
-
-
 Mary Mack is a recurring scene.
+
 Mary Mack begins when the player is in the location of bobby and the location of bobby is lit and bobby randomly decides to act.
 
-clap-count is a number that varies. clap-count is initially 0.
+Call-response tally is a number that varies. Call-response tally is 0.
 
-Mary Mack ends when clap-count is 7 or the location of bobby is dark;
+When Mary Mack begins:
+	 say "Bobby looks at you. He's clearly [one of]bored and has decided to annoy you[or]gotten into a mood[or]not letting this go[stopping].[paragraph break]"; 
+	say "Bobby: 'You look bored, dude. I can tell you wanna Mary Mack with me. Cause I'm your brother.'[paragraph break][first time]Well, crud. [only][line break]";
+	now the call-response tally is 1.	 
 
-Every turn during Mary Mack:
-	if the location is lit: [this line of code should be redundant- consider removing]
-		say rhyme;
-		
-Playing with is an action applying to one thing.
-understand "play with [something]" as playing with.
+Check playing with Bobby when Mary Mack is not happening:
+	say "Bobby looks at you like you're mental." instead.
+
+Mary Mack ends in temporary reprieve when the call-response tally is greater than the number of rows in the Table of Mary Mack Clap.
+Mary Mack ends in interruption when the location of Bobby is dark.
+
+Playing with is an action applying to one thing. Understand "play with [something]" as playing with.
+
+Carry out playing with Bobby while Mary Mack is happening:
+	choose row call-response tally in the Table of Mary Mack Clap;
+	say "You: '[call entry]'[paragraph break]";
+	say "Bobby: '[response entry]'[command clarification break]";
+	increment call-response tally.
 
 When Mary Mack ends:
-	now the clap-count is 0;
-	if the location is dark:
-		say "Bobby: [quotation mark]Hey! Who turned off the lights?[quotation mark]"
+	now the call-response tally is 0;
+	if Mary Mack ended in interruption, say "Bobby: 'Hey! Who turned off the lights?'";
+	if Mary Mack ended in temporary reprieve, say "Bobby: 'Thanks for playing, little buddy.'";
 		
-instead of doing something other than playing with bobby during Mary Mack:
-		complain;
+Instead of doing something other than playing with bobby during Mary Mack:
+	say "Bobby gives you an angry look. [paragraph break]Bobby: 'No! You have to play with me!'";
 
-After playing with bobby while Mary Mack is happening:
-	if clap-count is 0:
-		increment the clap-count;
-	otherwise if clap-count is 1:
-		say "You: [quotation mark]all dressed in black, black, black...[quotation mark]";
-		increment the clap-count;
-	otherwise if clap-count is 2:
-		say "You: [quotation mark]all down her back, back, back...[quotation mark]";
-		increment the clap-count;
-	otherwise if clap-count is 3:
-		say "You: [quotation mark]for fifteen cents, cents, cents...[quotation mark]";
-		increment the clap-count;
-	otherwise if clap-count is 4:
-		say "You: [quotation mark]jump over the fence, fence, fence... [quotation mark]";
-		increment the clap-count;
-	otherwise if clap-count is 5:
-		say "You: [quotation mark]he reached the sky, sky, sky...[quotation mark]";	
-		increment the clap-count;
-	otherwise if clap-count is 6:
-		say "You continue the rhyme: [quotation mark]'till the fourth of July, -ly, -ly[quotation mark]";
-		increment the clap-count;
-
-			
-to say rhyme:
-	if clap-count is 0:
-		say "Bobby looks at you expectantly.[line break]Bobby:[quotation mark]Play the hand clap game with me![quotation mark]";
-	otherwise if clap-count is 1:
-		say "Bobby: [quotation mark]Miss Mary Mack, Mack, Mack...[quotation mark]";
-	otherwise if clap-count is 2:
-		say "Bobby: [quotation mark]with silver buttons, buttons, buttons...[quotation mark]";
-	otherwise if clap-count is 3:
-		say "Bobby: [quotation mark]She asked her mother, mother, mother...[quotation mark]";
-	otherwise if clap-count is 4:
-		say "Bobby: [quotation mark]to see the elephant, elephant, elephant...[quotation mark]";
-	otherwise if clap-count is 5:
-		say "[quotation mark]he jumped so high, high, high...[quotation mark]";
-	otherwise if clap-count is 6:
-		say "Bobby: [quotation mark]and he didn't come back, back, back...[quotation mark]";
+Table of Mary Mack Clap
+call (a text)	response (a text)
+"Miss Mary Mack, Mack, Mack..."	"all dressed in black, black, black..."
+"with silver buttons, buttons, buttons..."	"all down her back, back, back..."
+"she asked her mother, mother, mother..."	"for fifteen cents, cents, cents..."
+"to see the elephant, elephant, elephant..."	"jump over the fence, fence, fence..."
+"he jumped so high, high, high..."	"he reached the sky, sky, sky..."
+"and he didn't come back, back, back..."	"[']til the fourth of July, -ly, -ly."
 		
-to complain:
-	say "Bobby gives you an angry look. [line break] Bobby:[quotation mark]No! You have to play with me![quotation mark]";
+
 [Teddy----------------------------------]
 
 Teddy is a person. 
@@ -334,7 +310,7 @@ Teddy has a number called boldness. boldness is usually 0.
 
 when play begins:
 	hope fades in 20 turns from now;
-	hope fades  in 40 turns from now;
+	hope fades in 40 turns from now;
 	hope fades in 50 turns from now;
 	hope fades in 60 turns from now;
 
@@ -470,7 +446,7 @@ to have mom fetch the vacuum:
 
 mom can be vacuum-neutral, vacuum-fetching, vacuum-seeking, vacuum-returning, or vacuum-doing. Mom is vacuum-neutral.
 
-the Your Bedroom can be either confined or free. The Your Bedroom is free.
+Your bedroom can be either confined or free. Your bedroom is free.
 		
 to have mom seek the vacuum:
 	if the vacuum is in the vicinity of mom or the vacuum is carried by the player:
@@ -478,8 +454,8 @@ to have mom seek the vacuum:
 			say "You took my vacuum cleaner!";
 			say "Mom takes the vacuum from you and puts you in time-out";
 			[now the player is in the dummy bedroom;]
-			now the player is in the your bedroom;
-			now the your bedroom is confined;
+			now the player is in your bedroom;
+			now your bedroom is confined;
 		now the vacuum is carried by mom;
 		now mom is vacuum-doing;
 		say "mom is vacuum-doing[line break]";
@@ -800,21 +776,19 @@ When time-out ends:
 	if Teddy is in the dummy bedroom:
 		now Teddy is in the Your Bedroom;]
 	
-Time-out is a recurring scene. time-out begins when the Your Bedroom is confined.
+Time-out is a recurring scene. time-out begins when your bedroom is confined.
 Time-out ends when the time since time-out began is 10 minutes.
 When time-out begins:
 	say "Mom drags you to a corner of your bedroom for a 10-minute time-out.";
 When time-out ends:
 	say "Your ten minute time-out ends, and you are now free to leave your bedroom.";
-	now the Your Bedroom is free;
+	now your bedroom is free;
 
 Before going to somewhere during time-out, say "You cannot leave your room during time-out." instead.
 
-Before Bobby going to the Your Bedroom during time-out, do nothing instead.
+Before Bobby going to your bedroom during time-out, do nothing instead.
 	
-a person can be alive or dead. A person is usually alive.
-
-
+A person can be alive or dead. A person is usually alive.
 
 A room can be salted or unsalted. A room is usually unsalted.
 
@@ -878,63 +852,64 @@ Chapter 6 - Rooms and important things in them
 
 [Note: the code at the beginning of this game randomizes the locations of some of these things, but they still have a starting location in these rooms just for the sake of my sanity]
 
-The Your Bedroom is a room.
+Your bedroom is a room. 
 	"This is your bedroom. There is a shelf with[if Teddy is in the location and Teddy is not carried by the player] a teddy bear on it. [otherwise] nothing on it.".
-	The step stool is an enterable supporter in Your Bedroom. The step stool is pushable between rooms.
-		the description of the step stool is
-			"Good for reaching high places.".
-	your bed is a fixed in place thing in your bedroom. the indefinite article is "your".
-	the dresser is a fixed in place thing in Your bedroom.
-	the drawers are a closed opaque openable container. the drawers are part of the dresser.
-	the description of the dresser is "A dresser with many drawers.".
-	understand "drawer" as the drawers.
-	The hamper is a container in the your bedroom. [random bedroom vs laundry room]
-	The lucky boxers is a wearable thing. The indefinite article is "your". the player carries the lucky boxers.
+	
+The printed name of your bedroom is "Your Bedroom".
+The step stool is an enterable supporter in Your Bedroom. The step stool is pushable between rooms.
+The description of the step stool is
+		"Good for reaching high places.".
 
-the description of the lucky boxers is "They're [if wet]wet[otherwise if dirty]dirty[otherwise]clean[end if]."
+Your bed is a fixed in place thing in your bedroom.
 
-instead of entering your bed:
-	say "There's no point.";
+The dresser is a fixed in place thing in your bedroom.
+The description of the dresser is "A dresser with many drawers.". 
+
+The drawers are a closed opaque openable container. The drawers are part of the dresser.
+Understand "drawer" as the drawers.
+
+The hamper is a container in your bedroom. [random bedroom vs laundry room]
+
+Some lucky boxers are a wearable thing. The indefinite article is "your". The player carries the lucky boxers.
+The description of the lucky boxers is "They're [if wet]wet[otherwise if dirty]dirty[otherwise]clean[end if]."
+
+Instead of entering your bed, say "There's no point."
 
 [I stole this code from somewhere, but I can't remember where... sorry about that]
 After going a direction (called way-pushed) with something (called the thing-pushed):
 	say "You push [the thing-pushed] [way-pushed] to [the location].";
 	continue the action. 
-	
 
-The Shared Bathroom is south of the Your Bedroom.
+A mirror is a kind of thing. A mirror is usually fixed in place.
+The description of a mirror is usually "You see yourself in it[if Teddy is in the location and Teddy is not carried by the player] with a teddy bear behind you[end if]."
+Instead of searching a mirror, try examining the noun.
+
+The Shared Bathroom is south of your bedroom.
 "You share this bathroom with your brother, Bobby."
-The small mirror is a fixed in place thing in the Shared Bathroom.
-the description of the small mirror is "I can see myself in it[if Teddy is in the location and Teddy is not carried by the player] with a teddy bear behind me.[otherwise].".
-the cabinet is an opaque closed openable fixed in place container in the Shared Bathroom;
+The small mirror is a mirror in the shared bathroom.
 
-Instead of searching the small mirror:
-	say "[the description of the small mirror]";
+The cabinet is an opaque closed openable fixed in place container in the Shared Bathroom.
 
 The Bobby's Bedroom is east of the Shared Bathroom and west of the Entry Hall.
-	The toybox is an opaque closed fixed in place openable container in Bobby's Bedroom.
+The toybox is an opaque closed fixed in place openable container in Bobby's Bedroom.
 
-The Small Hall is east of the Your Bedroom.
+The Small Hall is east of your bedroom.
 The hall closet is a fixed in place openable closed container in the Small Hall.
 The vacuum cleaner is a device in the hall closet.
 
 The Parent's Bedroom is north of the Small Hall.
-	the queen-sized bed is a fixed in place thing in the Parent's Bedroom.
-	the nightstand is a fixed in place opaque closed openable container in the Parent's Bedroom.
-The Parent's Bathroom is west of the Parent's Bedroom.
-the large mirror is a fixed in place thing in the Parent's Bathroom.
+The queen-sized bed is a fixed in place thing in the Parent's Bedroom.
+The nightstand is a fixed in place opaque closed openable container in the Parent's Bedroom.
 
-the description of the large mirror is "I can see myself in it[if Teddy is in the location and Teddy is not carried by the player] with a teddy bear behind me.[otherwise].".
+The Parent's Bathroom is west of the parent's bedroom.
+The large mirror is a mirror in the parent's bathroom.
 
-Instead of searching the large mirror:
-	say "[the description of the large mirror]";
-
-the Living Room is east of the Small Hall.
+The Living Room is east of the Small Hall.
 
 The Kitchen is north of the Living Room.
-	the pantry is an opaque closed fixed in place openable container in the Kitchen.
-	The salt shaker is [in the pantry.]carried by the player.
-	the description of the salt shaker is "It is [if the salt shaker is full]full of salt.[otherwise if the salt shaker is two-thirds full]two-thirds full of salt. [otherwise if the salt shaker is one-third full]one-third full of salt.[otherwise]empty.".
+the pantry is an opaque closed fixed in place openable container in the Kitchen.
+The salt shaker is [in the pantry.]carried by the player.
+The description of the salt shaker is "It is [if the salt shaker is full]full of salt.[otherwise if the salt shaker is two-thirds full]two-thirds full of salt. [otherwise if the salt shaker is one-third full]one-third full of salt.[otherwise]empty.".
 
 	
 instead of taking the salt shaker:
@@ -1031,7 +1006,7 @@ Report pouring:
 		say "[the location of the player] is salted.[line break]";
 		if mom is enclosed by the vicinity of the player:
 			say "Mom sees you pouring salt on the floor.[line break][quotation mark]My floor! No! You're getting a time-out for this right now![quotation mark]";
-			now the Your Bedroom is confined;
+			now your bedroom is confined;
 	otherwise if the second noun is not the floor:
 		if the second noun is not Teddy:
 			now the second noun is salty;
@@ -1220,4 +1195,4 @@ When dry cycle ends:
 		if the lucky boxers are wet:
 			now the lucky boxers are dry;
 			now the printed name of the boxers is "clean boxers";
-			now the starting position of the boxers is the Your Bedroom;	
+			now the starting position of the boxers is your bedroom;	
